@@ -1,0 +1,4 @@
+ACTION=="add", KERNEL=="sd[a-z]*", ENV{DEVTYPE}=="partition" RUN+="/etc/automount.sh /dev/%k /media/%k"
+ACTION=="add", KERNEL=="sd[a-z]*", ENV{DEVTYPE}=="disk" RUN+="/etc/automount.sh /dev/%k /media/%k"
+ACTION=="remove", KERNEL=="sd[a-z]*", ENV{DEVTYPE}=="partition" RUN+="/etc/autounmount.sh /dev/%k /media/%k"
+ACTION=="remove", KERNEL=="sd[a-z]*", ENV{DEVTYPE}=="disk" RUN+="/etc/autounmount.sh /dev/%k /media/%k"

@@ -1,0 +1,1 @@
+Изменил qreal с double на float в qglobal.h

@@ -1,6 +1,7 @@
 output
 downloads
 !downloads/uboot*
+!downloads/linux-custom
 *.log
 *.tmp
 .config.old
