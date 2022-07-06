@@ -1,0 +1,63 @@
+diff -Naur usbmount/usbmount usbmount-sk/usbmount
+--- usbmount/usbmount	2013-10-24 22:54:58.160152921 +0400
++++ usbmount-sk/usbmount	2013-10-24 22:53:08.160152796 +0400
+@@ -122,8 +122,16 @@
+ 		fi
+ 
+ 		# Mount the filesystem.
+-		log info "executing command: mount -t$fstype ${options:+-o$options} $DEVNAME $mountpoint"
+-		mount "-t$fstype" "${options:+-o$options}" "$DEVNAME" "$mountpoint"
++		if [ "$fstype" = "ntfs" ]; then
++		    log info "mount ntfs"
++		    /sbin/mount.ntfs-3g "${options:+-o$options}" "$DEVNAME" "$mountpoint"
++		elif [ "$fstype" = "exfat" ]; then
++		    log info "mount exfat"
++		    /usr/sbin/mount.exfat "$DEVNAME" "$mountpoint"
++		else 
++		    log info "executing command: mount -t$fstype ${options:+-o$options} $DEVNAME $mountpoint"
++		    mount "-t$fstype" "${options:+-o$options}" "$DEVNAME" "$mountpoint"
++		fi
+ 
+ 		# Determine vendor and model.
+ 		vendor=
+@@ -169,7 +177,7 @@
+ 	fi
+     fi
+ elif [ "$1" = remove ]; then
+-
++    FILESYSTEMS="$FILESYSTEMS fuseblk"
+     # A block or partition device has been removed.
+     # Test if it is mounted.
+     while read device mountpoint fstype remainder; do
+diff -Naur usbmount/usbmount.conf usbmount-sk/usbmount.conf
+--- usbmount/usbmount.conf	2011-08-08 19:01:54.000000000 +0400
++++ usbmount-sk/usbmount.conf	2013-10-24 22:53:08.160152796 +0400
+@@ -14,7 +14,7 @@
+ 
+ # Filesystem types: removable storage devices are only mounted if they
+ # contain a filesystem type which is in this list.
+-FILESYSTEMS="vfat ext2 ext3 ext4 hfsplus"
++FILESYSTEMS="vfat ext2 ext3 ext4 hfsplus ntfs exfat"
+ 
+ #############################################################################
+ # WARNING!                                                                  #
+@@ -46,7 +46,7 @@
+ # For example, "-fstype=vfat,gid=floppy,dmask=0007,fmask=0117" would add
+ # the options "gid=floppy,dmask=0007,fmask=0117" when a vfat filesystem
+ # is mounted.
+-FS_MOUNTOPTIONS=""
++FS_MOUNTOPTIONS="-fstype=ntfs,umask=0,nls=utf8"
+ 
+ # If set to "yes", more information will be logged via the syslog
+ # facility.
+diff -Naur usbmount/usbmount.rules usbmount-sk/usbmount.rules
+--- usbmount/usbmount.rules	2013-10-24 22:54:50.660153966 +0400
++++ usbmount-sk/usbmount.rules	1970-01-01 03:07:31.000000000 +0300
+@@ -3,5 +3,7 @@
+ KERNEL=="sd*", DRIVERS=="sbp2",		ACTION=="add",	RUN+="/usr/share/usbmount/usbmount add"
+ KERNEL=="sd*", SUBSYSTEM=="block",	ACTION=="add",	RUN+="/usr/share/usbmount/usbmount add"
+ KERNEL=="ub*", SUBSYSTEM=="block",	ACTION=="add",	RUN+="/usr/share/usbmount/usbmount add"
++KERNEL=="mmcblk*", SUBSYSTEM=="block",      ACTION=="add|change",  RUN+="/usr/share/usbmount/usbmount add"
+ KERNEL=="sd*",				ACTION=="remove",	RUN+="/usr/share/usbmount/usbmount remove"
+ KERNEL=="ub*",				ACTION=="remove",	RUN+="/usr/share/usbmount/usbmount remove"
++KERNEL=="mmcblk*",                          ACTION=="remove",       RUN+="/usr/share/usbmount/usbmount remove"

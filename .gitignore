@@ -1,0 +1,7 @@
+output
+downloads
+!downloads/uboot*
+*.log
+*.tmp
+.config.old
+dl

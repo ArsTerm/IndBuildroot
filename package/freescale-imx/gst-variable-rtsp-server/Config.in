@@ -1,0 +1,7 @@
+config BR2_PACKAGE_GST_VARIABLE_RTSP_SERVER
+	bool "gst-variable-rtsp-server"
+	select BR2_PACKAGE_GST1_RTSP_SERVER
+	help
+	  RTSP server.
+
+	  https://github.com/Gateworks/gst-gateworks-apps

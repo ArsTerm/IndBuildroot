@@ -1,0 +1,44 @@
+diff -uprN mmc-utils/mmc_cmds.c mmc-utils-sk/mmc_cmds.c
+--- mmc-utils/mmc_cmds.c	2017-03-20 16:58:49.000000000 +0300
++++ mmc-utils-sk/mmc_cmds.c	2019-02-01 01:48:35.000000000 +0300
+@@ -342,6 +342,19 @@ int do_writeprotect_user_get(int nargs,
+ 		exit(1);
+ 	}
+ 
++	if (ext_csd[EXT_CSD_ERASE_GROUP_DEF] == 0) {
++		/* set EXT_CSD_ERASE_GROUP_DEF bit 0 */
++		if (write_extcsd_value(fd, EXT_CSD_ERASE_GROUP_DEF, 0x1))
++			fprintf(stderr, "Could not write 0x1 to EXT_CSD[%d] in %s\n",
++				EXT_CSD_ERASE_GROUP_DEF, device);
++	}
++
++	ret = read_extcsd(fd, ext_csd);
++	if (ret) {
++		fprintf(stderr, "Could not read EXT_CSD from %s\n", device);
++		exit(1);
++	}
++
+ 	ret = get_wp_group_size_in_blks(ext_csd, &wp_sizeblks);
+ 	if (ret)
+ 		exit(1);
+@@ -417,6 +430,20 @@ int do_writeprotect_user_set(int nargs,
+ 		fprintf(stderr, "Could not read EXT_CSD from %s\n", device);
+ 		exit(1);
+ 	}
++
++	if (ext_csd[EXT_CSD_ERASE_GROUP_DEF] == 0) {
++		/* set EXT_CSD_ERASE_GROUP_DEF bit 0 */
++		if (write_extcsd_value(fd, EXT_CSD_ERASE_GROUP_DEF, 0x1))
++			fprintf(stderr, "Could not write 0x1 to EXT_CSD[%d] in %s\n",
++				EXT_CSD_ERASE_GROUP_DEF, device);
++	}
++
++	ret = read_extcsd(fd, ext_csd);
++	if (ret) {
++		fprintf(stderr, "Could not read EXT_CSD from %s\n", device);
++		exit(1);
++	}
++
+ 	ret = get_wp_group_size_in_blks(ext_csd, &wp_blks);
+ 	if (ret) {
+ 		fprintf(stderr, "Operation not supported for this device\n");

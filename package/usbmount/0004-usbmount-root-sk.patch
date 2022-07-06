@@ -1,0 +1,15 @@
+diff -Naur usbmount-0.0.22/usbmount usbmount-0.0.22-sk/usbmount
+--- usbmount-0.0.22/usbmount	2013-12-04 23:22:41.447966948 +0400
++++ usbmount-0.0.22-sk/usbmount	2013-12-04 23:22:23.457453719 +0400
+@@ -79,6 +79,11 @@
+     trap '( lockfile-remove /var/run/usbmount/.mount )' 0
+     log debug "acquired lock /var/run/usbmount/.mount.lock"
+ 
++    if mountpoint -n / | grep -q "$DEVNAME"                                     
++    then                                                              
++        exit 1                                                        
++    fi                                                                
++
+     if ! echo $ID_FS_USAGE | egrep -q "(filesystem|disklabel)"; then
+ 	log info "$DEVNAME does not contain a filesystem or disklabel"
+ 	exit 1
