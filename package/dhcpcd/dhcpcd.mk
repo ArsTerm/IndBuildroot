@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-DHCPCD_VERSION = 9.3.4
+DHCPCD_VERSION = 7.0.3
 DHCPCD_SOURCE = dhcpcd-$(DHCPCD_VERSION).tar.xz
 DHCPCD_SITE = http://roy.marples.name/downloads/dhcpcd
 DHCPCD_DEPENDENCIES = host-pkgconf

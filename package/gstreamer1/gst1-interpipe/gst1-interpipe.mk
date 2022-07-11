@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-GST1_INTERPIPE_VERSION = 814982ecd735e42ff2d14ce7c43039c259ec928b
+GST1_INTERPIPE_VERSION = 10dba89eecc200e49f0b432e299f1c8a4312b657
 GST1_INTERPIPE_SITE = https://github.com/RidgeRun/gst-interpipe
 GST1_INTERPIPE_SITE_METHOD = git
 # fetch gst-interpipe/common sub module

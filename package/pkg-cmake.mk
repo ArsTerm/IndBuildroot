@@ -90,10 +90,6 @@ define $(2)_CONFIGURE_CMDS
 	(mkdir -p $$($$(PKG)_BUILDDIR) && \
 	cd $$($$(PKG)_BUILDDIR) && \
 	rm -f CMakeCache.txt && \
-    PKG_CONFIG_LIBDIR=/home/rc-3/src/newbuild/buildroot-2019.02-sk/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/pkgconfig \
-    PKG_CONFIG=$$(PKG_CONFIG_HOST_BINARY) \
-    PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 \
-    PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 \
 	PATH=$$(BR_PATH) \
 	$$($$(PKG)_CONF_ENV) $$(BR2_CMAKE) $$($$(PKG)_SRCDIR) \
 		-DCMAKE_TOOLCHAIN_FILE="$$(HOST_DIR)/share/buildroot/toolchainfile.cmake" \
@@ -108,7 +104,7 @@ define $(2)_CONFIGURE_CMDS
 		-DBUILD_TESTING=OFF \
 		-DBUILD_SHARED_LIBS=$$(if $$(BR2_STATIC_LIBS),OFF,ON) \
 		$$(CMAKE_QUIET) \
-        $$($$(PKG)_CONF_OPTS) \
+		$$($$(PKG)_CONF_OPTS) \
 	)
 endef
 else

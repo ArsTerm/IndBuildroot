@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-LIBFUSE_VERSION = 3.1.0
+LIBFUSE_VERSION = 2.9.8
 LIBFUSE_SOURCE = fuse-$(LIBFUSE_VERSION).tar.gz
 LIBFUSE_SITE = https://github.com/libfuse/libfuse/releases/download/fuse-$(LIBFUSE_VERSION)
 LIBFUSE_LICENSE = GPL-2.0, LGPL-2.1
@@ -17,8 +17,8 @@ LIBFUSE_CONF_OPTS = \
 	--enable-util
 
 define LIBFUSE_INSTALL_TARGET_CMDS
-	cp -dpf $(STAGING_DIR)/usr/bin/fusermount3 $(TARGET_DIR)/usr/bin/
-	cp -dpf $(STAGING_DIR)/usr/lib/libfuse3.so* $(TARGET_DIR)/usr/lib/
+	cp -dpf $(STAGING_DIR)/usr/bin/fusermount $(TARGET_DIR)/usr/bin/
+	cp -dpf $(STAGING_DIR)/usr/lib/libfuse.so* $(TARGET_DIR)/usr/lib/
 endef
 
 $(eval $(autotools-package))

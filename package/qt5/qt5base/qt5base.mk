@@ -19,7 +19,7 @@ QT5BASE_INSTALL_STAGING = YES
 #  * -system-pcre because pcre is mandatory to build Qt, and we
 #    want to use the one packaged in Buildroot
 QT5BASE_CONFIGURE_OPTS += \
-    -optimized-qmake \
+	-optimized-qmake \
 	-no-cups \
 	-no-iconv \
 	-system-zlib \

@@ -37,6 +37,7 @@ endef
 #
 # Apply patches
 #
+
 ifeq ($(ARCH),powerpc)
 ifneq ($(BR2_SOFT_FLOAT),)
 define HOST_GCC_APPLY_POWERPC_PATCH

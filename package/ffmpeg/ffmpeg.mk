@@ -21,7 +21,7 @@ FFMPEG_CONF_OPTS = \
 	--enable-avfilter \
 	--disable-version3 \
 	--enable-logging \
-	--disable-optimizations \
+	--enable-optimizations \
 	--disable-extra-warnings \
 	--enable-avdevice \
 	--enable-avcodec \
@@ -284,9 +284,7 @@ else ifeq ($(BR2_PACKAGE_OPENCV3_LIB_IMGPROC)x$(BR2_PACKAGE_OPENCV3_WITH_FFMPEG)
 FFMPEG_CONF_OPTS += --enable-libopencv
 FFMPEG_DEPENDENCIES += opencv3
 else
-#FFMPEG_CONF_OPTS += --disable-libopencv
-FFMPEG_CONF_OPTS += --enable-libopencv
-FFMPEG_DEPENDENCIES += opencv3
+FFMPEG_CONF_OPTS += --disable-libopencv
 endif
 
 ifeq ($(BR2_PACKAGE_OPUS),y)
@@ -467,19 +465,19 @@ ifeq ($(BR2_ARM_CPU_ARMV4),y)
 FFMPEG_CONF_OPTS += --disable-armv5te
 endif
 ifeq ($(BR2_ARM_CPU_ARMV6)$(BR2_ARM_CPU_ARMV7A),y)
-FFMPEG_CONF_OPTS += --enable-armv6 --disable-armv5te
+FFMPEG_CONF_OPTS += --enable-armv6
 else
 FFMPEG_CONF_OPTS += --disable-armv6 --disable-armv6t2
 endif
 ifeq ($(BR2_ARM_CPU_HAS_VFPV2),y)
-FFMPEG_CONF_OPTS += --disable-vfp
+FFMPEG_CONF_OPTS += --enable-vfp
 else
 FFMPEG_CONF_OPTS += --disable-vfp
 endif
 ifeq ($(BR2_ARM_CPU_HAS_NEON),y)
 FFMPEG_CONF_OPTS += --enable-neon
 else ifeq ($(BR2_aarch64),y)
-FFMPEG_CONF_OPTS += --disable-neon
+FFMPEG_CONF_OPTS += --enable-neon
 else
 FFMPEG_CONF_OPTS += --disable-neon
 endif
@@ -511,13 +509,13 @@ endif
 
 # Default to --cpu=generic for MIPS architecture, in order to avoid a
 # warning from ffmpeg's configure script.
-#ifeq ($(BR2_mips)$(BR2_mipsel)$(BR2_mips64)$(BR2_mips64el),y)
-#FFMPEG_CONF_OPTS += --cpu=generic
-#else ifneq ($(GCC_TARGET_CPU),)
-#FFMPEG_CONF_OPTS += --cpu="$(GCC_TARGET_CPU)"
-#else ifneq ($(GCC_TARGET_ARCH),)
-#FFMPEG_CONF_OPTS += --cpu="$(GCC_TARGET_ARCH)"
-#endif
+ifeq ($(BR2_mips)$(BR2_mipsel)$(BR2_mips64)$(BR2_mips64el),y)
+FFMPEG_CONF_OPTS += --cpu=generic
+else ifneq ($(GCC_TARGET_CPU),)
+FFMPEG_CONF_OPTS += --cpu="$(GCC_TARGET_CPU)"
+else ifneq ($(GCC_TARGET_ARCH),)
+FFMPEG_CONF_OPTS += --cpu="$(GCC_TARGET_ARCH)"
+endif
 
 FFMPEG_CONF_OPTS += $(call qstrip,$(BR2_PACKAGE_FFMPEG_EXTRACONF))
 
@@ -535,11 +533,9 @@ define FFMPEG_CONFIGURE_CMDS
 		--arch=$(BR2_ARCH) \
 		--target-os="linux" \
 		--disable-stripping \
-		--enable-debug=3 \
 		--pkg-config="$(PKG_CONFIG_HOST_BINARY)" \
 		$(SHARED_STATIC_LIBS_OPTS) \
 		$(FFMPEG_CONF_OPTS) \
-		--extra-cflags="-gstabs+" \
 	)
 endef
 
