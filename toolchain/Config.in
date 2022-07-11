@@ -491,10 +491,7 @@ config BR2_TOOLCHAIN_GCC_AT_LEAST_8
 # stops affecting a value on the first matching default.
 config BR2_TOOLCHAIN_GCC_AT_LEAST
 	string
-	default "11" if BR2_TOOLCHAIN_GCC_AT_LEAST_11
-	default "10" if BR2_TOOLCHAIN_GCC_AT_LEAST_10
-	default "9" if BR2_TOOLCHAIN_GCC_AT_LEAST_9
-	default "11"	if BR2_TOOLCHAIN_GCC_AT_LEAST_8
+	default "8"	if BR2_TOOLCHAIN_GCC_AT_LEAST_8
 	default "7"	if BR2_TOOLCHAIN_GCC_AT_LEAST_7
 	default "6"	if BR2_TOOLCHAIN_GCC_AT_LEAST_6
 	default "5"	if BR2_TOOLCHAIN_GCC_AT_LEAST_5

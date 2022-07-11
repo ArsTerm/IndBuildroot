@@ -1,7 +1,7 @@
 if BR2_TOOLCHAIN_EXTERNAL_LINARO_ARM
 
 config BR2_TOOLCHAIN_EXTERNAL_PREFIX
-    default "arm-none-linux-gnueabihf"
+	default "arm-linux-gnueabihf"
 
 config BR2_PACKAGE_PROVIDES_TOOLCHAIN_EXTERNAL
 	default "toolchain-external-linaro-arm"
