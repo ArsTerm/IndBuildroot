@@ -18,6 +18,10 @@ else
     PART="1"
 fi
 
+if echo "$DISK" | grep -q "loop"; then
+    PART="p1"
+fi
+
 msg() {
     if [ $1 -ne 0 ]; then
         printf "[ERROR]\n"
@@ -87,7 +91,7 @@ tar xf output/images/rootfs.tar -C ./mnt >> mk-sd.log 2>&1
 msg $?
 
 printf "Copy system files           "
-cp -R ../SysFiles/* ./mnt >> mk-sd.log 2>&1
+cp -R ./SysFiles/* ./mnt >> mk-sd.log 2>&1
 msg $?
 chmod 0600 ./mnt/etc/NetworkManager/system-connections/*
 chmod 0777 ./mnt/opt/indicator-program/bin/*

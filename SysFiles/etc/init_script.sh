@@ -1,4 +1,10 @@
 #!/bin/sh
+if test -f "/opt/.init_file"; then
+	rm "/opt/.init_file"
+	resize2fs /dev/mmcblk1p1
+	reboot -f
+fi
+chmod 0777 /opt/IndicatorRestore/IndicatorRestore
 gpiochip=/sys/class/gpio
 echo 159 > $gpiochip/export
 echo 160 > $gpiochip/export
