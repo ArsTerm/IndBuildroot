@@ -70,7 +70,7 @@ msg $?
 
 printf "create primary partition    "
 # echo '1,' | sfdisk -u M $DISK >> mk-sd.log 2>&1
-echo '1M,,L' | sfdisk --force $DISK >> mk-sd.log 2>&1
+echo '1M,630M,L' | sfdisk --force $DISK >> mk-sd.log 2>&1
 msg $?
 
 printf "prepare u-boot.imx          "
@@ -95,6 +95,7 @@ cp -R ./SysFiles/* ./mnt >> mk-sd.log 2>&1
 msg $?
 chmod 0600 ./mnt/etc/NetworkManager/system-connections/*
 chmod 0777 ./mnt/opt/indicator-program/bin/*
+chmod 0777 ./mnt/opt/IndicatorRestore/*
 echo "$2" > ./mnt/opt/indicator-program/deviceName
 
 printf "umount partition            "

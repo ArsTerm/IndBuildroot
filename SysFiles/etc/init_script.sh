@@ -1,7 +1,9 @@
 #!/bin/sh
 if test -f "/opt/.init_file"; then
 	rm "/opt/.init_file"
-	resize2fs /dev/mmcblk1p1
+	printf '1M,630M,L\n,,L' | sfdisk --force /dev/mmcblk1
+	mkfs.ext2 -O ^64bit /dev/mmcblk1p2
+	mkdir /mnt/data
 	reboot -f
 fi
 chmod 0777 /opt/IndicatorRestore/IndicatorRestore
