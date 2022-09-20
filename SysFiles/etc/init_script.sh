@@ -6,7 +6,14 @@ if test -f "/opt/.init_file"; then
 	mkdir /mnt/data
 	reboot -f
 fi
-chmod 0777 /opt/IndicatorRestore/IndicatorRestore
+
+if test -f "/opt/.need_check"; then
+	e2fsck -p /dev/mmcblk1p2
+	rm "/opt/.need_check"
+fi
+
+mount /dev/mmcblk1p2
+
 gpiochip=/sys/class/gpio
 echo 159 > $gpiochip/export
 echo 160 > $gpiochip/export

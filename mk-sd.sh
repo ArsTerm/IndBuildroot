@@ -96,6 +96,11 @@ msg $?
 chmod 0600 ./mnt/etc/NetworkManager/system-connections/*
 chmod 0777 ./mnt/opt/indicator-program/bin/*
 chmod 0777 ./mnt/opt/IndicatorRestore/*
+chmod 0777 ./mnt/opt/can_uploader
+chmod 0777 ./mnt/etc/init_script.sh
+chmod 0777 ./mnt/etc/start_programm.sh
+chmod 0777 ./mnt/etc/automount.sh
+chmod 0777 ./mnt/etc/autoumount.sh
 echo "$2" > ./mnt/opt/indicator-program/deviceName
 
 printf "umount partition            "
