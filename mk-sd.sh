@@ -91,6 +91,7 @@ tar xf output/images/rootfs.tar -C ./mnt >> mk-sd.log 2>&1
 msg $?
 
 printf "Copy system files           "
+chmod 0777 ./SysFiles/usr/lib/*
 cp -R ./SysFiles/* ./mnt >> mk-sd.log 2>&1
 msg $?
 chmod 0600 ./mnt/etc/NetworkManager/system-connections/*
@@ -100,7 +101,7 @@ chmod 0777 ./mnt/opt/can_uploader
 chmod 0777 ./mnt/etc/init_script.sh
 chmod 0777 ./mnt/etc/start_programm.sh
 chmod 0777 ./mnt/etc/automount.sh
-chmod 0777 ./mnt/etc/autoumount.sh
+chmod 0777 ./mnt/etc/autounmount.sh
 echo "$2" > ./mnt/opt/indicator-program/deviceName
 
 printf "umount partition            "

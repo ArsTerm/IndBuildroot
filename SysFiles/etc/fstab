@@ -7,4 +7,4 @@ tmpfs		/tmp		tmpfs	mode=1777	0	0
 tmpfs		/run		tmpfs	mode=0755,nosuid,nodev	0	0
 sysfs		/sys		sysfs	defaults	0	0
 tmpfs		/media		tmpfs	defaults	0	0
-/dev/mmcblk1p2	/mnt/data	ext2	rw		0	2
+/dev/mmcblk1p2	/mnt/data	ext2	rw,noauto		0	2

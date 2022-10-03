@@ -1,10 +1,15 @@
 #!/bin/sh
 if test -f "/opt/.init_file"; then
-	rm "/opt/.init_file"
 	printf '1M,630M,L\n,,L' | sfdisk --force /dev/mmcblk1
-	mkfs.ext2 -O ^64bit /dev/mmcblk1p2
-	mkdir /mnt/data
+	rm "/opt/.init_file"
+	touch "/opt/.init_file2"
 	reboot -f
+fi
+
+if test -f "/opt/.init_file2"; then
+	mkdir /mnt/data
+	mkfs.ext2 -O ^64bit /dev/mmcblk1p2
+	rm "/opt/.init_file2"
 fi
 
 if test -f "/opt/.need_check"; then
