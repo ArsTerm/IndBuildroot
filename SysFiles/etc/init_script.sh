@@ -14,10 +14,15 @@ fi
 
 if test -f "/opt/.need_check"; then
 	e2fsck -p /dev/mmcblk1p2
+	RET=$?
+	echo $RET > /opt/checkResult
 	rm "/opt/.need_check"
 fi
 
 mount /dev/mmcblk1p2
+
+rm -R /.cache
+ln -s /tmp /.cache
 
 gpiochip=/sys/class/gpio
 echo 159 > $gpiochip/export

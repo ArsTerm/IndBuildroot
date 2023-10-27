@@ -9,8 +9,12 @@ export QT_QPA_EGLFS_FB=/dev/fb2
 #    export QT_QPA_EVDEV_TOUCHSCREEN_PARAMETERS=/dev/input/event2
 $programm -plugin evdevtouch
 val=$?
+if [[ "$val" -eq "139" ]]
+then
+	reboot -f
+fi
 if [[ "$val" -ne "0" ]]
 then
 	programm=/opt/IndicatorRestore/IndicatorRestore
-	$programm
+	$programm -plugin evdevtouch
 fi
